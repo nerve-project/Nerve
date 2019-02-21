@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Animated, AsyncStorage, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { Alert, Animated, AsyncStorage, Platform, StatusBar, StyleSheet, Text, View } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import DeviceInfo from 'react-native-device-info'
+import TouchID from 'react-native-touch-id'
 
 import NerveFonts from '../common/NerveFonts'
 import { UserInfo } from '../common/NerveInterface'
@@ -21,7 +22,7 @@ export default class Launch extends Component<Props, State> {
       scaleAnim: new Animated.Value(0)
     }
 
-    AsyncStorage.removeItem('userInfo')
+    // 인증 테스팅 AsyncStorage.removeItem('userInfo')
     this._bootstrapAsync()
   }
 
@@ -42,7 +43,11 @@ export default class Launch extends Component<Props, State> {
         if (infoData.role == '' || infoData.password == '') {
           Actions.replace('register')
         } else {
-          Actions.replace('home')
+          if (infoData.canTouchId) {
+            this._launchLocalAuth()
+          } else {
+            Actions.replace('patternAuth')
+          }
         }
       })
       
@@ -95,6 +100,40 @@ export default class Launch extends Component<Props, State> {
         200
       )
     )
+  }
+
+  _launchLocalAuth = () => {
+    const optionalConfigObject: any = Platform.select({
+      ios: {
+        fallbackLabel: 'PASSCODE 인증',
+        passcodeFallback: false
+      },
+      android: {
+        title: '지문인증',
+        imageColor: '#e00606',
+        imageErrorColor: '#ff0000',
+        sensorDescription: '터치센서',
+        sensorErrorDescription: '인증실패',
+        cancelText: '지문인증 사용안함'
+      }
+    })
+
+    TouchID.authenticate('생체인증', optionalConfigObject)
+      .then((success: any) => {
+        if (success) {
+          Actions.replace('home')
+        }
+      })
+      .catch((error: any) => {
+        Alert.alert(
+          '생체인증 실패',
+          '패턴으로 인증합니다.',
+          [
+            {text: '패턴인증', onPress: () => Actions.replace('patternAuth')}
+          ],
+          {cancelable: false}
+        )
+      })
   }
 }
 
