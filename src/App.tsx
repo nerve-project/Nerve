@@ -16,7 +16,7 @@ export default class App extends Component<Props> {
     console.disableYellowBox = true;
   }
 
-  render() {
+  render(): React.ReactNode {
     return (
       <Router>
         <Stack key='root'>

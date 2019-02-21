@@ -11,13 +11,7 @@ export default class RegisterProfile extends Component<Props> {
     this._getStorage()
   }
 
-  async _getStorage(): Promise<void> {
-    const userInfo: any = await AsyncStorage.getItem('userInfo')
-
-    console.log(JSON.parse(userInfo))
-  }
-
-  render(): JSX.Element {
+  render(): React.ReactNode {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Register Profile</Text>
@@ -28,6 +22,13 @@ export default class RegisterProfile extends Component<Props> {
       </View>
     )
   }
+
+  _getStorage = async (): Promise<void> => {
+    const userInfo: any = await AsyncStorage.getItem('userInfo')
+
+    console.log(JSON.parse(userInfo))
+  }
+
 }
 
 const styles: any = StyleSheet.create({

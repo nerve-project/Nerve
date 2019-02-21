@@ -1,4 +1,4 @@
-const kr = (weight: string = 'normal') => {
+const kr = (weight: string = 'normal'): string => {
   if (weight === 'bold') {
     return 'Sunflower-Medium'
   }
@@ -6,7 +6,7 @@ const kr = (weight: string = 'normal') => {
   return 'Sunflower-Light'
 }
 
-const en = (weight: string = 'normal') => {
+const en = (weight: string = 'normal'): string => {
   if (weight === 'bold') {
     return 'Comfortaa-Bold'
   }

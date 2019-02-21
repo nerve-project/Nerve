@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { AsyncStorage, Platform, StyleSheet, Text, View } from 'react-native'
 
 const instructions: string = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -8,8 +8,16 @@ const instructions: string = Platform.select({
     'Shake or press menu button for dev menu',
 })
 
-export default class Home extends Component {
-  render(): JSX.Element {
+interface Props { }
+
+export default class Home extends Component<Props> {
+  constructor(props: Props) {
+    super(props)
+
+    this._getStorage()
+  }
+
+  render(): React.ReactNode {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to React Native!</Text>
@@ -17,6 +25,12 @@ export default class Home extends Component {
         <Text style={styles.instructions}>{instructions}</Text>
       </View>
     )
+  }
+
+  _getStorage = async (): Promise<void> => {
+    const userInfo: any = await AsyncStorage.getItem('userInfo')
+
+    console.log(JSON.parse(userInfo))
   }
 }
 

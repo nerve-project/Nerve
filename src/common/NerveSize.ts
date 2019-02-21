@@ -2,11 +2,11 @@ import { Dimensions } from 'react-native'
 
 const { width, height } = Dimensions.get('window')
 
-const deviceWidth = () => {
+const deviceWidth = (): number => {
   return width
 }
 
-const deviceHeight = () => {
+const deviceHeight = (): number => {
   return height
 }
 

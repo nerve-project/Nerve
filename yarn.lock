@@ -4779,6 +4779,11 @@ react-native-tab-view@^1.0.0:
   dependencies:
     prop-types "^15.6.1"
 
+react-native-touch-id@^4.4.1:
+  version "4.4.1"
+  resolved "http://r.cnpmjs.org/react-native-touch-id/download/react-native-touch-id-4.4.1.tgz#8b1bb2d04c30bac36bb9696d2d723e719c4a8b08"
+  integrity sha1-ixuy0EwwusNruWltLXI+cZxKiwg=
+
 react-native@0.58.4:
   version "0.58.4"
   resolved "http://r.cnpmjs.org/react-native/download/react-native-0.58.4.tgz#bb1392727712787ba84983104c4920c0f4082677"

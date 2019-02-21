@@ -25,43 +25,6 @@ export default class Launch extends Component<Props, State> {
     this._bootstrapAsync()
   }
 
-  async _bootstrapAsync(): Promise<void> {
-    try {
-      const userInfo: any = await AsyncStorage.getItem('userInfo')
-      
-      if (userInfo === null) {
-        this._initAsync()
-      }
-    } catch (error) {
-      console.log(`bootstrapAsync Error: ${error}`)
-    }
-  }
-
-  async _initAsync(): Promise<void> {
-    try {
-      const uniqueId: string = DeviceInfo.getUniqueID()
-      const userInfo: UserInfo = {
-        uniqueId: uniqueId,
-        role: '',
-        password: ''
-      }
-
-      await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo))
-      this._bootstrapAsync()
-    } catch (error) {
-      console.log(`storageDeviceInfo Error: ${error}`)
-    }
-  }
-
-  async _performTimeConsumingTask(): Promise<{}> {
-    return new Promise((resolve) => 
-      setTimeout(
-        () => { resolve('result') },
-        200
-      )
-    )
-  }
-  
   async componentDidMount(): Promise<void> {
     const finished: any = await this._performTimeConsumingTask()
     const userInfo: any = await AsyncStorage.getItem('userInfo')
@@ -86,13 +49,51 @@ export default class Launch extends Component<Props, State> {
     }
   }
 
-  render(): JSX.Element {
+  render(): React.ReactNode {
     return (
       <View style={styles.container}>
         <StatusBar hidden={true} />
         <Text style={styles.title}>NERVE</Text>
         <Animated.View style={{...styles.bar, transform: [{ scale: this.state.scaleAnim }]}} />
       </View>
+    )
+  }
+
+  _bootstrapAsync = async (): Promise<void> => {
+    try {
+      const userInfo: any = await AsyncStorage.getItem('userInfo')
+      
+      if (userInfo === null) {
+        this._initAsync()
+      }
+    } catch (error) {
+      console.log(`bootstrapAsync Error: ${error}`)
+    }
+  }
+
+  _initAsync = async (): Promise<void> => {
+    try {
+      const uniqueId: string = DeviceInfo.getUniqueID()
+      const userInfo: UserInfo = {
+        uniqueId: uniqueId,
+        role: '',
+        password: '',
+        canTouchId: false
+      }
+
+      await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo))
+      this._bootstrapAsync()
+    } catch (error) {
+      console.log(`storageDeviceInfo Error: ${error}`)
+    }
+  }
+
+  _performTimeConsumingTask = async (): Promise<{}> => {
+    return new Promise((resolve) => 
+      setTimeout(
+        () => { resolve('result') },
+        200
+      )
     )
   }
 }
