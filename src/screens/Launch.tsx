@@ -40,9 +40,9 @@ export default class Launch extends Component<Props, State> {
         console.log(infoData)
 
         if (infoData.role == '' || infoData.password == '') {
-          Actions.register()
+          Actions.replace('register')
         } else {
-          Actions.home()
+          Actions.replace('home')
         }
       })
       

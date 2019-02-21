@@ -35,7 +35,7 @@ export default class RegisterRole extends Component {
 
     await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo))
 
-    Actions.registerProfile()
+    Actions.replace('registerProfile')
   }
 }
 

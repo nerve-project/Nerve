@@ -17,7 +17,7 @@ export default class RegisterProfile extends Component<Props> {
         <Text style={styles.welcome}>Register Profile</Text>
         <Button 
           title='프로필 등록'
-          onPress={() => Actions.registerPassword()}
+          onPress={() => Actions.replace('registerPassword')}
         />
       </View>
     )

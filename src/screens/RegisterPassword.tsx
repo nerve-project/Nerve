@@ -167,11 +167,11 @@ export default class RegisterProfile extends Component<Props, State> {
   }
 
   _noTouchIdios = (error: string) => {
-    Actions.home()
+    Actions.replace('home')
   }
 
   _noTouchIdadnroid = (error: string) => {
-    Actions.home()
+    Actions.replace('home')
   }
 
   _launchLocalAuth = () => {
@@ -201,7 +201,7 @@ export default class RegisterProfile extends Component<Props, State> {
           '생체인증 등록 실패',
           'Nerve에서 생체인증을 사용하지 않습니다.',
           [
-            {text: '확인', onPress: () => Actions.home()}
+            {text: '확인', onPress: () => Actions.replace('home')}
           ],
           {cancelable: false}
         )
@@ -222,7 +222,7 @@ export default class RegisterProfile extends Component<Props, State> {
 
     await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo))
 
-    Actions.home()
+    Actions.replace('home')
   }
 }
 

@@ -20,8 +20,8 @@ export default class App extends Component<Props> {
     return (
       <Router>
         <Stack key='root'>
-          <Scene key='launch' component={Launch} headerMode='none' hideNavBar initial type='reset' />
-          <Scene key='home' component={Home} headerMode='none' hideNavBar init type='replace' />
+          <Scene key='launch' component={Launch} headerMode='none' hideNavBar initial />
+          <Scene key='home' component={Home} headerMode='none' hideNavBar init />
 
           <Stack key="register" hideNavBar>
             <Scene key='registerRole' component={RegisterRole} />
