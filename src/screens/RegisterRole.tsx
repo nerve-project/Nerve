@@ -1,13 +1,33 @@
 import React, { Component } from 'react'
-import { AsyncStorage, Button, StyleSheet, Text, View } from 'react-native'
+import { Animated, AsyncStorage, Button, StyleSheet, Text, View } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 
 import { UserInfo } from '../common/NerveInterface'
 
-export default class RegisterRole extends Component {
+interface Props {}
+
+export default class RegisterRole extends Component<Props> {
+  _fadeIn: Animated.Value
+
+  constructor(props: Props) {
+    super(props)
+
+    this._fadeIn = new Animated.Value(0)
+  }
+
+  componentDidMount(): void {
+    Animated.timing(
+      this._fadeIn,
+      {
+        toValue: 1,
+        duration: 1000
+      }
+    ).start();   
+  }
+
   render(): React.ReactNode {
     return (
-      <View style={styles.container}>
+      <Animated.View style={{...styles.container, opacity: this._fadeIn}}>
         <Text style={styles.welcome}>Register Role</Text>
         <Button 
           title='Player'
@@ -17,7 +37,7 @@ export default class RegisterRole extends Component {
           title='Watcher'
           onPress={() => this._setRoleData('watcher')}
         />
-      </View>
+      </Animated.View>
     )
   }
 

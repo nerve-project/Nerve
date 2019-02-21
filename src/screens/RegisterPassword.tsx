@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, AsyncStorage, Platform, StyleSheet, Text, View } from 'react-native'
+import { Alert, Animated, AsyncStorage, Platform, StyleSheet, Text, View } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import TouchID from 'react-native-touch-id'
 
@@ -22,6 +22,7 @@ interface State {
 
 export default class RegisterProfile extends Component<Props, State> {
   _cachedPassword: string
+  _fadeIn: Animated.Value
 
   constructor(props: Props) {
     super(props)
@@ -35,24 +36,37 @@ export default class RegisterProfile extends Component<Props, State> {
     }
 
     this._cachedPassword = ''
+    this._fadeIn = new Animated.Value(0)
+  }
+
+  componentDidMount(): void {
+    Animated.timing(
+      this._fadeIn,
+      {
+        toValue: 1,
+        duration: 1000
+      }
+    ).start();   
   }
 
   render(): React.ReactNode {
     return (
-      <GesturePassword
-        style={styles.container}
-        pointBackgroundColor={'#F4F4F4'}
-        isWarning={this.state.isWarning}
-        gestureAreaLength={NerveSize.deviceWidth() * 0.8}
-        color={'#A9A9A9'}
-        activeColor={'#00AAEF'}
-        warningColor={'red'}
-        warningDuration={1500}
-        allowCross={true}
-        topComponent={this._renderDescription()}
-        onFinish={this._onFinish}
-        onReset={this._onReset}
-      />
+      <Animated.View style={{...styles.container, opacity: this._fadeIn}}>
+        <GesturePassword
+          style={styles.passwordContainer}
+          pointBackgroundColor={'#F4F4F4'}
+          isWarning={this.state.isWarning}
+          gestureAreaLength={NerveSize.deviceWidth() * 0.8}
+          color={'#A9A9A9'}
+          activeColor={'#00AAEF'}
+          warningColor={'red'}
+          warningDuration={1500}
+          allowCross={true}
+          topComponent={this._renderDescription()}
+          onFinish={this._onFinish}
+          onReset={this._onReset}
+        />
+      </Animated.View>
     )
   }
 
@@ -228,6 +242,10 @@ export default class RegisterProfile extends Component<Props, State> {
 
 const styles: any = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: '#F5FCFF'
+  },
+  passwordContainer: {
     paddingTop: 20 + 44
   },
   thumbItems: {

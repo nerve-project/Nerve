@@ -22,7 +22,7 @@ export default class Launch extends Component<Props, State> {
       scaleAnim: new Animated.Value(0)
     }
 
-    // 인증 테스팅 AsyncStorage.removeItem('userInfo')
+    // AsyncStorage.removeItem('userInfo')
     this._bootstrapAsync()
   }
 
