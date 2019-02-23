@@ -4742,6 +4742,11 @@ react-native-drawer-layout@1.3.2:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
+react-native-linear-gradient@^2.5.3:
+  version "2.5.3"
+  resolved "http://r.cnpmjs.org/react-native-linear-gradient/download/react-native-linear-gradient-2.5.3.tgz#d90cf19a13fcccfa8bb32025ac40a15ae1b49e99"
+  integrity sha1-2QzxmhP8zPqLsyAlrEChWuG0npk=
+
 react-native-router-flux@^4.0.6:
   version "4.0.6"
   resolved "http://r.cnpmjs.org/react-native-router-flux/download/react-native-router-flux-4.0.6.tgz#e4723f5ce89cb5822e0c9bb6d0a8d4de6179eb58"
@@ -4764,6 +4769,11 @@ react-native-screens@^1.0.0-alpha.11:
   version "1.0.0-alpha.22"
   resolved "http://r.cnpmjs.org/react-native-screens/download/react-native-screens-1.0.0-alpha.22.tgz#7a120377b52aa9bbb94d0b8541a014026be9289b"
   integrity sha1-ehIDd7Uqqbu5TQuFQaAUAmvpKJs=
+
+react-native-splash-screen@^3.2.0:
+  version "3.2.0"
+  resolved "http://r.cnpmjs.org/react-native-splash-screen/download/react-native-splash-screen-3.2.0.tgz#d47ec8557b1ba988ee3ea98d01463081b60fff45"
+  integrity sha1-1H7IVXsbqYjuPqmNAUYwgbYP/0U=
 
 react-native-tab-view@^0.0.77:
   version "0.0.77"

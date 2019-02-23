@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Animated, AsyncStorage, Button, StyleSheet, Text, View } from 'react-native'
+import { Animated, AsyncStorage, Button, StatusBar, StyleSheet, Text } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 
 import { UserInfo } from '../common/NerveInterface'
@@ -20,7 +20,8 @@ export default class RegisterRole extends Component<Props> {
       this._fadeIn,
       {
         toValue: 1,
-        duration: 1000
+        duration: 1000,
+        useNativeDriver: true
       }
     ).start();   
   }
@@ -28,6 +29,7 @@ export default class RegisterRole extends Component<Props> {
   render(): React.ReactNode {
     return (
       <Animated.View style={{...styles.container, opacity: this._fadeIn}}>
+        <StatusBar translucent={true} backgroundColor={'#F5FCFF'} barStyle={'dark-content'} />
         <Text style={styles.welcome}>Register Role</Text>
         <Button 
           title='Player'

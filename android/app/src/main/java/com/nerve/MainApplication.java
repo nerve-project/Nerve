@@ -3,6 +3,8 @@ package com.nerve;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.BV.LinearGradient.LinearGradientPackage;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.facebook.react.ReactNativeHost;
@@ -25,6 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new LinearGradientPackage(),
+            new SplashScreenReactPackage(),
             new FingerprintAuthPackage(),
             new RNDeviceInfo()
       );

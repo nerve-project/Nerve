@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, Animated, AsyncStorage, Platform, StyleSheet, Text, View } from 'react-native'
+import { Alert, Animated, AsyncStorage, StyleSheet, Text, View } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 
 import GesturePassword from '../components/GesturePassword'
@@ -45,7 +45,8 @@ export default class PatternAuth extends Component<Props, State> {
       this._fadeIn,
       {
         toValue: 1,
-        duration: 1000
+        duration: 1000,
+        useNativeDriver: true
       }
     ).start();   
   }

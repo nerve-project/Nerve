@@ -3,6 +3,8 @@ import { Alert, Animated, AsyncStorage, Platform, StatusBar, StyleSheet, Text, V
 import { Actions } from 'react-native-router-flux'
 import DeviceInfo from 'react-native-device-info'
 import TouchID from 'react-native-touch-id'
+import SplashScreen from 'react-native-splash-screen'
+import LinearGradient from 'react-native-linear-gradient'
 
 import NerveFonts from '../common/NerveFonts'
 import { UserInfo } from '../common/NerveInterface'
@@ -10,57 +12,56 @@ import NerveSize from '../common/NerveSize'
 
 interface Props { }
 
-interface State {
-  scaleAnim: Animated.Value
-}
+export default class Launch extends Component<Props> {
+  _fadeIn: Animated.Value
+  _scaleAnim: Animated.Value
 
-export default class Launch extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
 
-    this.state = {
-      scaleAnim: new Animated.Value(0)
-    }
+    this._fadeIn = new Animated.Value(0)
+    this._scaleAnim = new Animated.Value(0)
 
-    // AsyncStorage.removeItem('userInfo')
+    AsyncStorage.removeItem('userInfo')
     this._bootstrapAsync()
   }
 
-  async componentDidMount(): Promise<void> {
-    const finished: any = await this._performTimeConsumingTask()
-    const userInfo: any = await AsyncStorage.getItem('userInfo')
-    const infoData: any = JSON.parse(userInfo)
+  componentDidMount(): void {
+    SplashScreen.hide()
 
-    if (finished !== null) {
+    Animated.sequence([
       Animated.timing(
-        this.state.scaleAnim, {
+        this._fadeIn,
+        {
           toValue: 1,
-          duration: 3000
+          duration: 1000,
+          useNativeDriver: true
         }
-      ).start(() => {
-        console.log(infoData)
-
-        if (infoData.role == '' || infoData.password == '') {
-          Actions.replace('register')
-        } else {
-          if (infoData.canTouchId) {
-            this._launchLocalAuth()
-          } else {
-            Actions.replace('patternAuth')
-          }
+      ),
+      Animated.timing(
+        this._scaleAnim, {
+          toValue: 1,
+          duration: 3000,
+          useNativeDriver: true
         }
-      })
-      
-    }
+      )
+    ])
+    .start(() => this._runTask())
   }
 
   render(): React.ReactNode {
     return (
-      <View style={styles.container}>
+      <Animated.View style={{...styles.gradientContainer, opacity: this._fadeIn}}>
         <StatusBar hidden={true} />
-        <Text style={styles.title}>NERVE</Text>
-        <Animated.View style={{...styles.bar, transform: [{ scale: this.state.scaleAnim }]}} />
-      </View>
+        <LinearGradient
+          colors={['#FFB05B', '#F6D365']}
+          style={styles.gradientContainer}>
+          <View style={styles.mainContainer}>
+            <Text style={styles.title}>NERVE</Text>
+            <Animated.View style={{...styles.bar, transform: [{ scale: this._scaleAnim }]}} />
+          </View>
+        </LinearGradient>
+      </Animated.View>
     )
   }
 
@@ -93,13 +94,21 @@ export default class Launch extends Component<Props, State> {
     }
   }
 
-  _performTimeConsumingTask = async (): Promise<{}> => {
-    return new Promise((resolve) => 
-      setTimeout(
-        () => { resolve('result') },
-        200
-      )
-    )
+  _runTask = async (): Promise<void> => {
+    const userInfo: any = await AsyncStorage.getItem('userInfo')
+    const infoData: any = JSON.parse(userInfo)
+
+    console.log(infoData)
+
+    if (infoData.role == '' || infoData.password == '') {
+      Actions.replace('register')
+    } else {
+      if (infoData.canTouchId) {
+        this._launchLocalAuth()
+      } else {
+        Actions.replace('patternAuth')
+      }
+    }
   }
 
   _launchLocalAuth = () => {
@@ -138,11 +147,13 @@ export default class Launch extends Component<Props, State> {
 }
 
 const styles: any = StyleSheet.create({
-  container: {
+  gradientContainer: {
+    flex: 1
+  },
+  mainContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'orange'
+    alignItems: 'center'
   },
   title: {
     fontSize: 40,

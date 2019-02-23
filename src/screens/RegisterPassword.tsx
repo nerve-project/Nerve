@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, Animated, AsyncStorage, Platform, StyleSheet, Text, View } from 'react-native'
+import { Alert, Animated, AsyncStorage, Platform, StatusBar, StyleSheet, Text, View } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import TouchID from 'react-native-touch-id'
 
@@ -44,7 +44,8 @@ export default class RegisterProfile extends Component<Props, State> {
       this._fadeIn,
       {
         toValue: 1,
-        duration: 1000
+        duration: 1000,
+        useNativeDriver: true
       }
     ).start();   
   }
@@ -52,6 +53,7 @@ export default class RegisterProfile extends Component<Props, State> {
   render(): React.ReactNode {
     return (
       <Animated.View style={{...styles.container, opacity: this._fadeIn}}>
+        <StatusBar translucent={true} backgroundColor={'#F5FCFF'} barStyle={'dark-content'} />
         <GesturePassword
           style={styles.passwordContainer}
           pointBackgroundColor={'#F4F4F4'}
